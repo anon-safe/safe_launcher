@@ -23,6 +23,7 @@ var paths = {
         './bower_components/**',
         './scripts/**',
         './images/**',
+        './translations/**',
         './vendor/**',
         './**/*.html',
         './**/*.+(jpg|png|svg)'

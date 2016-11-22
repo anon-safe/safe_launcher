@@ -8,7 +8,9 @@
           required="true"
           ng-model="user.accountSecret"
           focus="true" />
-        <label for="accountSecret">Account Secret</label>
+        <label for="accountSecret">
+            {{ "Account Secret" | translate }}
+        </label>
         <div class="msg"></div>
         <div class="opt">
           <div class="opt-i">
@@ -22,7 +24,9 @@
           name="accountPassword"
           required="true"
           ng-model="user.accountPassword"/>
-        <label for="accountPassword">Account Password</label>
+        <label for="accountPassword">
+          {{ "Account Password" | translate }}
+        </label>
         <div class="msg"></div>
         <div class="opt">
           <div class="opt-i">
@@ -31,12 +35,17 @@
         </div>
       </div>
       <div class="inp-btn">
-        <button type="submit" class="btn primary" name="login" ng-disabled="!loginForm.$valid">Login</button>
+        <button type="submit" class="btn primary" name="login" ng-disabled="!loginForm.$valid">
+          {{ "Login" | translate }}
+        </button>
       </div>
     </form>
     <div class="form-f">
       <div class="form-f-b">
-        Don't have a account ? <a ui-sref="app.account({currentPage: 'register'})">Create Account</a>
+        {{ "Don't have a account?" | translate }}
+        <a ui-sref="app.account({currentPage: 'register'})">
+          {{ "Create Account" | translate }}
+        </a>
       </div>
     </div>
   </div>

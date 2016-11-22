@@ -1,13 +1,19 @@
 <div class="splash" style="background: red">
   <div class="splash-b connecting" ng-show="$networkStatus.status === 0">
     <div class="splash-media"></div>
-    <span class="splash-i">Trying to Connect you to the SAFE Network!</span>
+    <span class="splash-i">
+      {{ "Trying to Connect you to the SAFE Network!" | translate }}
+    </span>
   </div>
   <div class="splash-b disconnected" ng-show="$networkStatus.status === 2">
     <div class="splash-media"></div>
-    <span class="splash-i">Could not connect to the SAFE Network!</span>
+    <span class="splash-i">
+      {{ "Could not connect to the SAFE Network!" | translate }}
+    </span>
     <div class="opt">
-      <button type="button" class="btn danger" name="button" ng-click="reconnectNetwork()">Retry</button>
+      <button type="button" class="btn danger" name="button" ng-click="reconnectNetwork()">
+        {{ "Retry" | translate }}
+      </button>
     </div>
   </div>
 </div>

@@ -9,21 +9,27 @@
                 ng-model="logFilterInProgress" ng-change="toggleFilter('IN_PROGRESS')"
                 checked="{{logFilterInProgress}}"
                 ng-disabled="(keys(logList).length === 0)">
-              <label for="inProgress">In Progress</label>
+              <label for="inProgress">
+                {{ "In Progress" | translate }}
+              </label>
             </div>
             <div class="table-filter-i checkbox completed">
               <input id="completed" type="checkbox" name="completed" value="" ng-model="logFilterComplete"
                 ng-change="toggleFilter('SUCCESS')"
                 checked="{{logFilterComplete}}"
                 ng-disabled="(keys(logList).length === 0)">
-              <label for="completed">Completed</label>
+              <label for="completed">
+                {{ "Completed" | translate }}
+              </label>
             </div>
             <div class="table-filter-i checkbox error">
               <input id="error" type="checkbox" name="error" value="" ng-model="logFilterError"
                 ng-change="toggleFilter('FAILURE')"
                 checked="{{logFilterError}}"
                 ng-disabled="(keys(logList).length === 0)">
-              <label for="error">Error</label>
+              <label for="error">
+                {{ "Error" | translate }}
+              </label>
             </div>
           </div>
           <react-component name="AppLogs" props="{bridge: logListComponent, app: false, filter: logFilter, table:'four-col'}" watch-depth="value"></react-component>

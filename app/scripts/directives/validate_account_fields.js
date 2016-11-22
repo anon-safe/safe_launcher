@@ -1,6 +1,6 @@
 // validate account password on change
-window.safeLauncher.directive('validateAccountSecret', [ 'CONSTANTS', 'MESSAGES', '$rootScope',
-  function($constant, $msg, $rootScope) {
+window.safeLauncher.directive('validateAccountSecret', [ 'CONSTANTS', 'MESSAGES', '$rootScope', '$translate',
+  function($constant, $msg, $rootScope, $translate) {
     var onChange = function(scope, ele, attr, ctrl) {
       var msgEle = ele.siblings('.msg');
       var parent = ele.parent();
@@ -34,11 +34,15 @@ window.safeLauncher.directive('validateAccountSecret', [ 'CONSTANTS', 'MESSAGES'
         switch (true) {
           case (log10 < 4):
             // parent.addClass('vweak');
-            msgEle.text($msg.PASS_VERY_WEEK);
+            $translate($msg.PASS_VERY_WEEK).then(function(msg) {
+                msgEle.text(msg);
+            });
             break;
           case (log10 < 8):
             // parent.addClass('weak');
-            msgEle.text($msg.PASS_WEEK);
+            $translate($msg.PASS_WEEK).then(function(msg) {
+                msgEle.text(msg);
+            });
             break;
           case (log10 < 10):
             // parent.addClass('somewhat-secure');
@@ -46,12 +50,16 @@ window.safeLauncher.directive('validateAccountSecret', [ 'CONSTANTS', 'MESSAGES'
               statusEle.addClass('icn');
               isValid = true;
             }
-            msgEle.text($msg.PASS_SOMEWHAT_SECURE);
+            $translate($msg.PASS_SOMEWHAT_SECURE).then(function(msg) {
+                msgEle.text(msg);
+            });
             break;
           case (log10 >= 10):
             // parent.addClass('secure');
             statusEle.addClass('icn');
-            msgEle.text($msg.PASS_SECURE);
+            $translate($msg.PASS_SECURE).then(function(msg) {
+                msgEle.text(msg);
+            });
             isValid = true;
             break;
           default:

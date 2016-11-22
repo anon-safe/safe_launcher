@@ -2,8 +2,8 @@
  * Authentication Controller
  */
 window.safeLauncher.controller('authController', [ '$scope', '$state', '$rootScope', '$timeout',
-  'authFactory', 'CONSTANTS', 'MESSAGES',
-  function($scope, $state, $rootScope, $timeout, auth, CONSTANTS, MESSAGES) {
+  'authFactory', 'CONSTANTS', 'MESSAGES', '$translate',
+  function($scope, $state, $rootScope, $timeout, auth, CONSTANTS, MESSAGES, $translate) {
     var REQUEST_TIMEOUT = 90 * 1000;
     var FIELD_FOCUS_DELAY = 100;
     var showErrorField = function(targetId, msg) {
@@ -23,11 +23,14 @@ window.safeLauncher.controller('authController', [ '$scope', '$state', '$rootSco
     // user create account
     var createAccount = function() {
       if ($rootScope.$networkStatus.status !== window.NETWORK_STATE.CONNECTED) {
-        return $rootScope.$toaster.show({
-          msg: 'Network not yet conneted',
-          hasOption: false,
-          isError: true
-        }, function() {});
+        $translate('Network not yet connected').then(function(msg) {
+          $rootScope.$toaster.show({
+            msg: msg,
+            hasOption: false,
+            isError: true
+          }, function() {});
+        });
+        return;
       }
       var request = new Request(onAuthResponse);
       $scope.cancelRequest = request.cancel;
@@ -64,10 +67,16 @@ window.safeLauncher.controller('authController', [ '$scope', '$state', '$rootSco
         removeErrorMsg('AccountSecret');
         if (this.states.indexOf(state) > this.states.indexOf('ACC_SECRET_FORM')) {
           if (!$scope.secretValid) {
-            return showErrorField('AccountSecret', MESSAGES.ACC_SECRET_MUST_STRONGER);
+            $translate(MESSAGES.ACC_SECRET_MUST_STRONGER).then(function(msg) {
+              showErrorField('AccountSecret', msg);
+            });
+            return;
           }
           if ($scope.user.accountSecret !== $scope.user.confirmAccountSecret) {
-            return showErrorField('AccountSecretConfirm', MESSAGES.ENTRIES_DONT_MATCH);
+            $translate(MESSAGES.ENTRIES_DONT_MATCH).then(function(msg) {
+              showErrorField('AccountSecretConfirm', msg);
+            });
+            return;
           }
         }
         $state.go('app.account', { currentPage: $state.params.currentPage,
@@ -80,10 +89,16 @@ window.safeLauncher.controller('authController', [ '$scope', '$state', '$rootSco
         }
         if (this.currentPos === this.states.indexOf('ACC_PASS_FORM')) {
           if (!$scope.passwordValid) {
-            return showErrorField('AccountPass', MESSAGES.ACC_PASS_MUST_STRONGER);
+            $translate(MESSAGES.ACC_PASS_MUST_STRONGER).then(function(msg) {
+              showErrorField('AccountPass', msg);
+            });
+            return;
           }
           if ($scope.user.accountPassword !== $scope.user.confirmAccountPassword) {
-            return showErrorField('AccountPassConfirm', MESSAGES.ENTRIES_DONT_MATCH);
+            $translate(MESSAGES.ENTRIES_DONT_MATCH).then(function(msg) {
+              showErrorField('AccountPassConfirm', msg);
+            });
+            return;
           }
         }
         createAccount();
@@ -109,7 +124,9 @@ window.safeLauncher.controller('authController', [ '$scope', '$state', '$rootSco
       };
 
       self.cancel = function() {
-        onResponse(new Error('Request cancelled'));
+        $translate('Request cancelled').then(function(msg) {
+          onResponse(new Error(msg));
+        });
         alive = false;
       };
 
@@ -142,10 +159,13 @@ window.safeLauncher.controller('authController', [ '$scope', '$state', '$rootSco
             errorMsg: errMsg
           }, { reload: true });
           $rootScope.user = {};
-          return $rootScope.$toaster.show({
-            msg: errMsg,
-            isError: true
-          }, function() {});
+          $translate(errMsg).then(function(msg) {
+              $rootScope.$toaster.show({
+                msg: msg,
+                isError: true
+              }, function() {});
+          });
+          return;
         }
         switch (errMsg) {
           case 'CoreError::RequestTimeout':
@@ -161,19 +181,24 @@ window.safeLauncher.controller('authController', [ '$scope', '$state', '$rootSco
           default:
             errMsg = errMsg.replace('CoreError::', '');
         }
-        errMsg = 'Login failed. ' + errMsg;
-        var errorTarget = $('#errorTarget');
-        errorTarget.addClass('error');
-        errorTarget.children('.msg').text(errMsg);
-        errorTarget.children('input').focus();
-        errorTarget.children('input').bind('keyup', function(e) {
-          errorTarget.children('.msg').text('');
-          errorTarget.removeClass('error');
+        $translate('Login failed.').then(function(msg1) {
+            $translate(errMsg).then(function(msg2) {
+                var msg = msg1 + " " + msg2;
+                var errorTarget = $('#errorTarget');
+                errorTarget.addClass('error');
+                errorTarget.children('.msg').text(msg);
+                errorTarget.children('input').focus();
+                errorTarget.children('input').bind('keyup', function(e) {
+                  errorTarget.children('.msg').text('');
+                  errorTarget.removeClass('error');
+                });
+                $rootScope.$toaster.show({
+                  msg: msg,
+                  isError: true
+                }, function() {});
+            });
         });
-        return $rootScope.$toaster.show({
-          msg: errMsg,
-          isError: true
-        }, function() {});
+        return;
       }
       $rootScope.isAuthenticated = true;
       $rootScope.$applyAsync();
@@ -183,11 +208,14 @@ window.safeLauncher.controller('authController', [ '$scope', '$state', '$rootSco
     // user login
     $scope.login = function() {
       if ($rootScope.$networkStatus.status !== window.NETWORK_STATE.CONNECTED) {
-        return $rootScope.$toaster.show({
-          msg: 'Network not yet conneted',
-          hasOption: false,
-          isError: true
-        }, function() {});
+        $translate('Network not yet conneted').then(function(msg) {
+          $rootScope.$toaster.show({
+            msg: msg,
+            hasOption: false,
+            isError: true
+          }, function() {});
+        });
+        return;
       }
       var request = new Request(onAuthResponse);
       $scope.cancelRequest = request.cancel;

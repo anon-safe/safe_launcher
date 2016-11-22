@@ -17,7 +17,7 @@
     connected: $networkStatus.status === 1,
     'splash-screen': $state.current.name === 'splash'
   }" ng-click="showNetworkStatus($networkStatus.status)">
-    <span class="network-status-tooltip">{{networkStatusMsg[$networkStatus.status]}}</span>
+    <span class="network-status-tooltip">{{networkStatusMsg[$networkStatus.status] | translate}}</span>
   </span>
   <alert ng-show="$prompt.isProcessing" payload="$prompt.payload" callback="$prompt.callback()"></alert>
   <toaster payload="$toaster.payload" callback="$toaster.callback()"></toaster>
@@ -27,6 +27,8 @@
     window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.min.js');
   </script>
   <script src="./node_modules/angular/angular.js"></script>
+  <script src="./bower_components/angular-translate/angular-translate.js"></script>
+  <script src="./bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
   <script src="./bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="./bower_components/moment/moment.js"></script>
   <script src="./node_modules/react/dist/react.js"></script>

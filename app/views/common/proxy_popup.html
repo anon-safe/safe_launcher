@@ -4,19 +4,31 @@
       <!-- settings -->
       <div class="settings popup">
         <div class="settings-b">
-          <h3 class="title">Proxy Settings</h3>
+          <h3 class="title">
+            {{ "Proxy Settings" | translate }}
+          </h3>
           <p class="desc">
-            The proxy server allows you to view websites and content from SAFE Network
-            in your browser of choice
-            (<a href="#" ng-click="openExternal($event, 'https://maidsafe.readme.io/docs/proxy-setup')">read more</a>).
+            {{ "The proxy server allows you to view websites and content from SAFE Network in your browser of choice" | translate }}
+            (<a href="#" ng-click="openExternal($event, 'https://maidsafe.readme.io/docs/proxy-setup')">
+                {{ "read more" | translate }}
+            </a>).
           </p>
           <p class="desc last">
-            If you would like to disable this proxy, please use the toggle below.
+            {{ "If you would like to disable this proxy, please use the toggle below." | translate }}
           </p>
           <div class="settings-i" ng-init="proxy = true" ng-click="proxy = !proxy">
             <div class="settings-i-ctn">
-              <h3 class="settings-i-name">Proxy</h3>
-              <h3 class="settings-i-desc">Is {{ proxy ? 'enabled' : 'disabled' }}</h3>
+              <h3 class="settings-i-name">
+                {{ "Proxy" | translate }}
+              </h3>
+              <h3 class="settings-i-desc">
+                  <span ng-if="proxy">
+                    {{ "Is enabled" | translate }}
+                  </span>
+                  <span ng-if="!proxy">
+                    {{ "Is disabled" | translate }}
+                  </span>
+              </h3>
             </div>
             <div class="opt">
               <span class="switch" ng-class="{active: proxy}"></span>
@@ -27,7 +39,9 @@
       <!-- /settings -->
       <div class="settings-popup-opt">
         <div class="settings-popup-opt-i">
-          <button type="button" class="btn flat primary" name="continue" ng-click="configureProxySetting(proxy)">Continue</button>
+          <button type="button" class="btn flat primary" name="continue" ng-click="configureProxySetting(proxy)">
+            {{ "Continue" | translate }}
+          </button>
         </div>
       </div>
     </div>

@@ -2,8 +2,8 @@
  * Basic Controller
  */
 window.safeLauncher.controller('basicController', [ '$scope', '$state', '$rootScope',
-  '$interval', '$timeout', 'serverFactory', 'CONSTANTS', 'eventRegistrationFactory',
-  function($scope, $state, $rootScope, $interval, $timeout, server, CONSTANTS, eventRegistry) {
+  '$interval', '$timeout', 'serverFactory', 'CONSTANTS', 'eventRegistrationFactory', '$translate',
+  function($scope, $state, $rootScope, $interval, $timeout, server, CONSTANTS, eventRegistry, $translate) {
     var completeCount = 0;
     var collectedData = {
       GET: {
@@ -250,35 +250,43 @@ window.safeLauncher.controller('basicController', [ '$scope', '$state', '$rootSc
         }
         $rootScope.retryCount = 1;
         if ($rootScope.$networkStatus.status !== state) {
-          $rootScope.$toaster.show({
-            msg: 'Network connected',
-            hasOption: false,
-            isError: false
-          }, function(err, data) {});
+          $translate('Network connected').then(function(msg) {
+            $rootScope.$toaster.show({
+              msg: msg,
+              hasOption: false,
+              isError: false
+            }, function(err, data) {});
+          });
         }
         $rootScope.$networkStatus.status = state;
       } else if (state === window.NETWORK_STATE.DISCONNECTED) {
         $rootScope.$networkStatus.status = state;
         $rootScope.clearIntervals();
         if ($rootScope.$state.current.name !== 'splash' && $rootScope.$state.current.name  !== '') {
-          $rootScope.$toaster.show({
-            msg: 'Network Disconnected. Retrying in ',
-            hasOption: true,
-            isError: true,
-            autoCallbackIn: Math.min(CONSTANTS.RETRY_NETWORK_INIT_COUNT * $rootScope.retryCount,
-              CONSTANTS.RETRY_NETWORK_MAX_COUNT),
-            opt: {
-              name: 'Retry Now'
-            }
-          }, function(err, data) {
-            $rootScope.retryCount *= 2;
-            $rootScope.$networkStatus.status = window.NETWORK_STATE.CONNECTING;
-            $rootScope.$toaster.show({
-              msg: 'Trying to reconnnect to the network',
-              hasOption: false,
-              isError: false
-            }, function(err, data) {});
-            $scope.reconnectNetwork($rootScope.userInfo);
+          $translate('Network Disconnected. Retrying in %s').then(function(autoRetryMsg) {
+            $translate('Retry Now').then(function(retryNowMsg) {
+              $rootScope.$toaster.show({
+                msg: autoRetryMsg,
+                hasOption: true,
+                isError: true,
+                autoCallbackIn: Math.min(CONSTANTS.RETRY_NETWORK_INIT_COUNT * $rootScope.retryCount,
+                  CONSTANTS.RETRY_NETWORK_MAX_COUNT),
+                opt: {
+                  name: retryNowMsg,
+                }
+              }, function(err, data) {
+                $rootScope.retryCount *= 2;
+                $rootScope.$networkStatus.status = window.NETWORK_STATE.CONNECTING;
+                $translate('Trying to reconnnect to the network').then(function(tryingToReconnectMsg) {
+                  $rootScope.$toaster.show({
+                    msg: tryingToReconnectMsg,
+                    hasOption: false,
+                    isError: false
+                  }, function(err, data) {});
+                });
+                $scope.reconnectNetwork($rootScope.userInfo);
+              });
+            });
           });
         }
       } else if (state === window.NETWORK_STATE.CONNECTING) {

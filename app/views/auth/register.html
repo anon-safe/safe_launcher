@@ -14,7 +14,10 @@
   </div>
   <div class="form-f">
     <div class="form-f-b no-border">
-      Already have an account? <a ui-sref="app.account({currentPage: 'login'})">Login</a>
+      {{ "Already have an account?" | translate }}
+      <a ui-sref="app.account({currentPage: 'login'})">
+        {{ "Login" | translate }}
+      </a>
     </div>
   </div>
   <ng-include src="'views/auth/loader.html'" ng-show="isAuthLoading"></ng-include>

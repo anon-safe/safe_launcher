@@ -9,6 +9,7 @@
   "main": "background.js",
   "dependencies": {
     "angular": "^1.5.7",
+    "angular-translate": "^2.13.0",
     "base64-url": "^1.2.2",
     "body-parser": "~1.15.2",
     "d3": "3.5.17",

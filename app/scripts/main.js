@@ -6,12 +6,18 @@
  * Main module of the application.
  */
 window.safeLauncher = angular
-  .module('safeLauncher', [ 'ui.router', 'react' ])
+  .module('safeLauncher', [ 'ui.router', 'react', 'pascalprecht.translate' ])
   .config([ '$httpProvider', function($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
-  }
-])
+  }])
+  .config([ '$translateProvider', function ($translateProvider) {
+    $translateProvider.useStaticFilesLoader({
+        prefix: "translations/",
+        suffix: ".json",
+    });
+    $translateProvider.preferredLanguage('zh');
+  }])
 .run([ '$rootScope', '$state', '$stateParams', '$timeout', '$interval', 'CONSTANTS', 'logListComponent',
   'eventRegistrationFactory',
   function($rootScope, $state, $stateParams, $timeout, $interval, CONSTANTS, logListComponent, eventRegistry) {
