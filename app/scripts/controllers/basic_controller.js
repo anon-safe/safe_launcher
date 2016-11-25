@@ -297,6 +297,7 @@ window.safeLauncher.controller('basicController', [ '$scope', '$state', '$rootSc
     });
 
     $scope.changeLanguage = function(languageCode) {
+      window.localStorage.setItem("language", languageCode);
       $translate.use(languageCode);
     }
 
