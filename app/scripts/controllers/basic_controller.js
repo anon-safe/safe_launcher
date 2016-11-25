@@ -296,6 +296,10 @@ window.safeLauncher.controller('basicController', [ '$scope', '$state', '$rootSc
       $rootScope.$applyAsync();
     });
 
+    $scope.changeLanguage = function(languageCode) {
+      $translate.use(languageCode);
+    }
+
     // initialize application
     server.start();
   }
