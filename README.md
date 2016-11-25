@@ -68,6 +68,12 @@ the current nodejs platform architecture will be used. Accepted values are `x86`
 
 Example usage `npm run package -- --arch=x64`
 
+# Adding Translations
+
+* Copy the template.json file from `app/translations/template.json`.
+* Fill in all the blank `""` values with the translation of the phrase.
+* Add the language to `app/views/common/languagepicker.html`
+
 # License
 
 Licensed under either of
