@@ -16,7 +16,7 @@ window.safeLauncher = angular
         prefix: "translations/",
         suffix: ".json",
     });
-    $translateProvider.preferredLanguage('zh');
+    $translateProvider.preferredLanguage('en');
   }])
 .run([ '$rootScope', '$state', '$stateParams', '$timeout', '$interval', 'CONSTANTS', 'logListComponent',
   'eventRegistrationFactory',
