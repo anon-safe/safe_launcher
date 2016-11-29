@@ -70,6 +70,13 @@ Example usage `npm run package -- --arch=x64`
 
 # Adding Translations
 
+**Using Transifex**
+
+* Visit https://www.transifex.com/iancoleman/safe-launcher/
+* Request to be a translator for the target language.
+
+**As a text file**
+
 * Copy the template.json file from `app/translations/template.json`.
 * Fill in all the blank `""` values with the translation of the phrase.
 * Add the language to `app/views/common/languagepicker.html`
