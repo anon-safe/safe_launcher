@@ -299,6 +299,22 @@ window.safeLauncher.controller('basicController', [ '$scope', '$state', '$rootSc
     $scope.changeLanguage = function(languageCode) {
       window.localStorage.setItem("language", languageCode);
       $translate.use(languageCode);
+      setRtl();
+    }
+
+    $scope.setRtl = function() {
+      var languageCode = window.localStorage.getItem("language");
+      var rtlLangs = [
+          "ar", "arc", "bcc", "bqi", "ckb", "dv", "fa", "glk", "he", "ks",
+          "lrc", "mzn", "pnb", "ps", "sd", "ug", "ur", "yi", "nqo",
+      ];
+      var useRtl = rtlLangs.indexOf(languageCode) > -1;
+      if (useRtl) {
+          document.body.setAttribute("dir", "rtl");
+      }
+      else {
+          document.body.setAttribute("dir", "ltr");
+      }
     }
 
     // initialize application
